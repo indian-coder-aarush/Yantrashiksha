@@ -1,8 +1,4 @@
-from Tanitra import Tanitra
 from Tanitra import length,mean,square,to_cons
-from Parata import PraveshParata, GuptaParata, NirgamParata
-from Yantrasiksha.Tanitra import convolution2d
-
 
 class AnukramikPratirup:
 

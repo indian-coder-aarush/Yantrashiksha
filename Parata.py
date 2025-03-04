@@ -182,5 +182,5 @@ class MaxPoolingLayer2D:
         output = Tanitra.Tanitra([])
         for i in range(Tanitra.length(X)):
             output  = output.append(Tanitra.pooling2d(X[i],self.pool_window,self.stride,padding_mode=self.padding,
-                                            pad_width=self.pad_width,constant_values=self.pad_constants).data)
+                                            pad_width=self.pad_width,constant_values=self.pad_constants))
         return output
