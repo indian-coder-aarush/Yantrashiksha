@@ -193,13 +193,14 @@ def pooling2d(a,pool_size,stride,padding_mode= None,pad_width = None,constant_va
         for j in range(w):
             new_tanitra_data[i,j] = cp.max(a.data[i:i+pool_size,j:j+pool_size])
             index = cp.argmax(a.data[i:i + pool_size, j:j + pool_size])
-            index_tupple = (index//pool_size+i,index % pool_size+j)
+            index_tupple = (index//pool_size+i*stride,index % pool_size+j*stride)
             indices_list.append(index_tupple)
     new_tanitra = Tanitra(new_tanitra_data)
     if a.track_gradient:
         def gradient_function(grad):
             unsampled = cp.zeros_like(a_padded)
-            unsampled[indices_list] = grad
+            row_indices, col_indices = zip(*indices_list)
+            unsampled[row_indices, col_indices] = grad.reshape(unsampled[row_indices, col_indices].shape)
             if padding_mode is not None:
                 if isinstance(pad_width,tuple):
                     unsampled = grad[pad_width[0][0]:-pad_width[0][1],pad_width[1][0]:-pad_width[1][1]]
